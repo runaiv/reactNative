@@ -30,7 +30,6 @@ export default class Home extends React.Component {
   async getImage(url){
     const response = await fetch(url);
     const responseJson = await response.json();
-    console.log(responseJson.sprites.front_default)
     return responseJson.sprites.front_default
   }
   

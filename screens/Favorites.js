@@ -2,6 +2,8 @@ import React from 'react';
 import { ActivityIndicator, Text, View ,Button,  selected, TouchableOpacity, Image, Alert, StyleSheet } from 'react-native';
 //mport { firebase } from '@react-native-firebase/auth';
 //import auth from '@react-native-firebase/auth';
+import {AsyncStorage} from 'react-native';
+
 
 export default class Favorites extends React.Component {
 
@@ -9,6 +11,22 @@ export default class Favorites extends React.Component {
     super(props);
     this.state = { isLoading: false}
   }
+
+  componentDidMount(){ 
+    this._retrieveData()
+  }
+  
+
+  _retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('UID');
+      if (value !== null) {
+        // We have data!!
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
 
   render(){
     if(this.state.isLoading){
@@ -21,7 +39,6 @@ export default class Favorites extends React.Component {
 
     return(
         <View>
-          <Text>hey</Text>
           <Button style= {{flexDirection: 'row-reverse', position: 'Add to favorites'}} 
             title="Login page"
             onPress={() => this.props.navigation.navigate('Login')}

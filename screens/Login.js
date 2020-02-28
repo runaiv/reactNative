@@ -6,7 +6,7 @@ import {
     View,
     Button
 } from 'react-native';
-
+import {AsyncStorage} from 'react-native';
 import firebase from 'firebase';
 
 export default class Login extends Component {
@@ -19,10 +19,19 @@ export default class Login extends Component {
         }
       }
 
+      _storeData = async (id) => {
+        try {
+          await AsyncStorage.setItem('UID', id);
+        }catch (error) {
+          // Error saving data
+        }
+      };
+
       loginUser(username, password){
         if(username != '' && password != ''){
                 firebase.auth().signInWithEmailAndPassword(username, password)
-                .then(data => console.log(data.value))
+                
+                .then(data => this._storeData(data.user.uid), this.props.navigation.navigate('Favorites'))
                 .catch(function(error) {
                     alert(error)
                     // Handle Errors here
@@ -31,8 +40,7 @@ export default class Login extends Component {
                     alert(errorMessage)
                     // ...
                     
-                });
-       
+                }); 
         }     else
         {
          alert('username or password is invalid')

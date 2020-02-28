@@ -38,7 +38,7 @@ export default class Details extends React.Component {
     }
     return (
     <SafeAreaView style={styles.container}>
-        <Button style= {{flexDirection: 'row-reverse', position: 'Add to favorites'}} 
+        <Button style= {{flexDirection: 'row-reverse'}} 
           title="Add to favorites"
           onPress={() => this.props.navigation.navigate('Favorites')}
         />
@@ -52,8 +52,7 @@ export default class Details extends React.Component {
                 {this.state.dataSource.moves.map(data => 
                      <Text style={styles.value}>{data.move.name}</Text>
                 )}
-            </View>
-
+        </View>
         </ScrollView>
       </SafeAreaView>
       
