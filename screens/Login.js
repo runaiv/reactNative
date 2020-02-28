@@ -22,7 +22,7 @@ export default class Login extends Component {
       loginUser(username, password){
         if(username != '' && password != ''){
                 firebase.auth().signInWithEmailAndPassword(username, password)
-                .then(data => console.log(data))
+                .then(data => console.log(data.value))
                 .catch(function(error) {
                     alert(error)
                     // Handle Errors here
