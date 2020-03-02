@@ -1,8 +1,9 @@
 import React from 'react';
-import { ActivityIndicator, Text, View ,Button,  selected, TouchableOpacity, Image, Alert, StyleSheet } from 'react-native';
+import { ActivityIndicator, Text, View ,Button,  selected, TouchableOpacity, Image, Alert, StyleSheet,  } from 'react-native';
 //mport { firebase } from '@react-native-firebase/auth';
 //import auth from '@react-native-firebase/auth';
 import {AsyncStorage} from 'react-native';
+
 
 
 export default class Favorites extends React.Component {
@@ -10,6 +11,9 @@ export default class Favorites extends React.Component {
   constructor(props){
     super(props);
     this.state = { isLoading: false}
+    this.state = {
+      isLoggedIn: false
+    }
   }
 
   componentDidMount(){ 
@@ -22,6 +26,8 @@ export default class Favorites extends React.Component {
       const value = await AsyncStorage.getItem('UID');
       if (value !== null) {
         // We have data!!
+        alert('success'),
+        this.setState({isLoggedIn : true})
       }
     } catch (error) {
       // Error retrieving data
@@ -29,15 +35,8 @@ export default class Favorites extends React.Component {
   };
 
   render(){
-    if(this.state.isLoading){
+    if(!this.state.isLoggedIn){
       return(
-        <View style={{flex: 1, padding: 20}}>
-          <ActivityIndicator/>
-        </View>
-      )
-    }
-
-    return(
         <View>
           <Button style= {{flexDirection: 'row-reverse', position: 'Add to favorites'}} 
             title="Login page"
@@ -48,10 +47,21 @@ export default class Favorites extends React.Component {
             onPress={() => this.props.navigation.navigate('Signup')}
           />
         </View>
-          
-    );
-  }
-} 
+      );
+    }
+    else
+    {
+      return(
+        <View>
+           <Button style= {{flexDirection: 'row-reverse', position: 'Add to favorites'}} 
+            title="Back to list"
+            onPress={() => this.props.navigation.navigate('Home')}
+          />
+        </View>
+      )
+    }
+  } 
+}
 const styles = StyleSheet.create({
   item: {
     flex: 1,

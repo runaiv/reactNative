@@ -6,7 +6,8 @@ export default class Home extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = { isLoading: true}
+    this.state = { isLoading: true,
+    imageUrl : ''}
   }
 
   componentDidMount(){
@@ -18,19 +19,25 @@ export default class Home extends React.Component {
           isLoading: false,
           dataSource: responseJson.results,
         }, function(){
-
         });
 
       })
       .catch((error) =>{
         console.error(error);
-      });
+      })
   }
 
   async getImage(url){
-    const response = await fetch(url);
-    const responseJson = await response.json();
-    return responseJson.sprites.front_default
+    await fetch(url)
+    .then((responseImg) => responseImg.json())
+    .then((responseJsonImageUrl) => {
+      this.setState({
+        dataSourceImage: responseJsonImageUrl.sprites
+      }),
+      alert('success')
+    }).catch((error) =>{
+      console.error(error);
+    })
   }
   
   render(){
@@ -53,14 +60,14 @@ export default class Home extends React.Component {
           style={[
             styles.item,
           ]}
-        >
+          >
           <Text style={styles.title}>{item.name}</Text>
           <Image
           style={{width: 50, height: 50}}
-          source={''}
+          source={{uri: () => this.getImage(item.url)}}
           //this.getImage(item.url)
           />
-        </TouchableOpacity>
+          </TouchableOpacity>
           }
         />
       </View>
