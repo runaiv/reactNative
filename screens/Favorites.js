@@ -26,7 +26,6 @@ export default class Favorites extends React.Component {
       const value = await AsyncStorage.getItem('UID');
       if (value !== null) {
         // We have data!!
-        alert('success'),
         this.setState({isLoggedIn : true})
       }
     } catch (error) {
