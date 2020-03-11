@@ -1,8 +1,9 @@
 import React from 'react';
-import { ActivityIndicator, Text, View ,Button,  selected, TouchableOpacity, Image, Alert, StyleSheet,  } from 'react-native';
+import { ActivityIndicator, Text, View ,Button,  selected, TouchableOpacity, Image, Alert, StyleSheet, ScrollView } from 'react-native';
 //mport { firebase } from '@react-native-firebase/auth';
 //import auth from '@react-native-firebase/auth';
 import {AsyncStorage} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -10,8 +11,9 @@ export default class Favorites extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = { isLoading: false}
-    this.state = {
+    this.state = { 
+      isLoading: false,
+      userId: null,
       isLoggedIn: false
     }
   }
@@ -26,12 +28,34 @@ export default class Favorites extends React.Component {
       const value = await AsyncStorage.getItem('UID');
       if (value !== null) {
         // We have data!!
-        this.setState({isLoggedIn : true})
+        this.setState({isLoggedIn : true,
+          userId: value})
       }
     } catch (error) {
       // Error retrieving data
     }
   };
+  
+  readUserData(){
+    firebase.database().ref('/users/' + this.state.userId).on('value', this.gotData, this.errData)
+  }
+  
+  gotData(data){
+    let pokemons = data.val() 
+    let keys = Object.keys(pokemons)
+    let ids = []
+    for(var i=0; i < keys.length; i++){
+      let k = keys[i]
+      ids.push(pokemons[k].pokemonId)
+    }
+    let idsOfPokemon = Array.from(new Set(ids))
+    return idsOfPokemon
+  }
+
+  errData(err){
+    console.log(err)
+  }
+
 
   render(){
     if(!this.state.isLoggedIn){
@@ -51,12 +75,11 @@ export default class Favorites extends React.Component {
     else
     {
       return(
-        <View>
-           <Button style= {{flexDirection: 'row-reverse', position: 'Add to favorites'}} 
-            title="Back to list"
-            onPress={() => this.props.navigation.navigate('Home')}
-          />
-        </View>
+        <SafeAreaView>
+          <ScrollView>
+            <Text>Nothing to show</Text>
+          </ScrollView>
+        </SafeAreaView>
       )
     }
   } 

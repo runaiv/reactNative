@@ -51,16 +51,46 @@ export default class Details extends React.Component {
   }
 
   addTofav(){
-    this.writeUserData()
-    this.readUserData()
+    if(this.state.isLoggedIn){
+      this.writeUserData() 
+      alert('addded to favorites')
+      this.props.navigation.navigate('Favorites')
+    }
+    else{
+      this.props.navigation.navigate('Login')
+    }   
+    //this.writeUserData()
+    //this.readUserData()
   }
 
   writeUserData() {
-    firebase.database().ref('users/' + this.state.userId).set({
-      Pokemon : this.state.dataSource.weight
+    this.readUserData()
+    firebase.database().ref('users/' + this.state.userId).push({
+      pokemonId : this.state.dataSource.id
     })
+    
   }
   
+  readUserData(){
+    firebase.database().ref('/users/' + this.state.userId).on('value', this.gotData, this.errData)
+  }
+  
+  gotData(data){
+    let pokemons = data.val() 
+    let keys = Object.keys(pokemons)
+    let ids = []
+    for(var i=0; i < keys.length; i++){
+      let k = keys[i]
+      ids.push(pokemons[k].pokemonId)
+    }
+    let idsOfPokemon = Array.from(new Set(ids))
+    return idsOfPokemon
+  }
+
+  errData(err){
+    console.log(err)
+  }
+
   render(){
     if(this.state.isLoading){
       return(
@@ -87,14 +117,15 @@ export default class Details extends React.Component {
           </View>
         </ScrollView>
       </SafeAreaView>
-      
-    )}
-    else{
+      )
+    }
+    else {
       return(
+        
         <Text>Nothing to show</Text>
       )
     }
-}
+  }
 }
 const styles = StyleSheet.create({
     container: {
