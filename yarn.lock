@@ -2171,8 +2171,9 @@ decamelize@^1.1.1, decamelize@^1.2.0:
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
 
 decode-uri-component@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.2.tgz#e69dbe25d37941171dd540e024c444cd5188e1e9"
+  integrity sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==
 
 deep-assign@^3.0.0:
   version "3.0.0"
@@ -2428,9 +2429,10 @@ expo-web-browser@~8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/expo-web-browser/-/expo-web-browser-8.0.0.tgz#8a4451c744c115569a4c810dac8851f219a21c72"
 
-expo@~36.0.0:
+expo@^36.0.2:
   version "36.0.2"
   resolved "https://registry.yarnpkg.com/expo/-/expo-36.0.2.tgz#17e5470c056f8615ebdd6819087af6a1032cf1ad"
+  integrity sha512-A0HkOBr6PkHUCcPmmTRmZQHE68EYhWDevFHAiv7fSZxNACmTq9arrSoON+UiPtGQEIV5OyV+MN/joHTJMduTkA==
   dependencies:
     "@babel/runtime" "^7.1.2"
     "@expo/vector-icons" "^10.0.2"
